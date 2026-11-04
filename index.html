@@ -171,7 +171,10 @@ a.card:hover .stage img{transform:scale(1.04)}
 .price-box .row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
 .price-box .lbl{font:500 .72rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .price-box strong{display:block;margin-top:8px;font:900 2.2rem/1 var(--f-display);font-style:italic;text-transform:uppercase}
-.price-box .ctas .btn{flex:1}
+.price-box .ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.price-box .ctas .btn{white-space:normal;text-align:center;line-height:1.2;padding:14px 12px;min-width:0}
+.price-box .ctas .btn:last-child{grid-column:1/-1}
+@media (max-width:420px){.price-box .ctas{grid-template-columns:1fr}}
 .stats{display:flex;flex-direction:column;gap:14px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:6px}
 .stats .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .stats .head h4{font-size:1.3rem;font-weight:800}
@@ -1264,14 +1267,14 @@ const DB={
     {id:'meca',t:'Moto 50 cm³',d:'Moto à vitesses : enduro, supermotard, sportive'},
     {id:'scoot',t:'Scooter 50 cm³',d:'Booster, Nitro, Speedfight, Zip…'},
     {id:'m125',t:'Moto 125 cm³',d:'Roadster, sportive, trail, supermotard'},
-    {id:'cross',t:'Cross / pit bike',d:'Moto tout-terrain non homologuée'}
+    {id:'cross',t:'Moto cross',d:'Moto tout-terrain non homologuée'}
   ],
   brands:{
     meca:{
       'Beta':{m:['RR 50 Enduro','RR 50 Motard','RR 50 Track','RR 50 Sport'],e:AM6},
       'Derbi':{m:['Senda DRD Racing R','Senda DRD Racing SM','Senda DRD Pro','Senda X-Treme R','Senda X-Treme SM','Senda Baja','GPR 50','X-Race'],e:'Derbi'},
-      'Rieju':{m:['MRT 50','MRT Pro 50','MRT SM 50','RS3 50','SMX 50','Marathon 50'],e:AM6},
-      'Sherco':{m:['SE-R 50','SM-R 50','HRD 50'],e:null},
+      'Rieju':{m:['MRT 50','MRT Pro 50','MRT SM 50','MRT Trophy 50','RS3 50','SMX 50','Marathon 50'],e:AM6},
+      'Sherco':{m:['SE-R 50','SM-R 50','SM-RS 50','HRD 50'],e:null},
       'Aprilia':{m:['RX 50','SX 50','RS 50','RS4 50','MX 50','Tuono 50'],e:null},
       'Yamaha':{m:['DT 50 R','DT 50 X','TZR 50'],e:AM6},
       'MBK':{m:['X-Limit Enduro','X-Limit SM','X-Power'],e:AM6},
@@ -1318,8 +1321,7 @@ const DB={
       'Kawasaki':{m:['KX 65','KX 85'],e:null},
       'Husqvarna':{m:['TC 50','TC 65','TC 85'],e:null},
       'Honda':{m:['CR 85','CR 125'],e:null},
-      'GasGas':{m:['MC 50','MC 65','MC 85'],e:null},
-      'Pit bike':{m:['YCF','Bucci','Apollo','Autre pit bike'],e:null}
+      'GasGas':{m:['MC 50','MC 65','MC 85'],e:null}
     }
   },
   engines:{
@@ -1330,18 +1332,18 @@ const DB={
   },
   cylBrands:['Top Performances','Malossi','Airsal','Barikit','Polini','Metrakit','Italkit','Doppler','Stage6','Parmakit','Motoforce','Tecnigas','Athena','Bidalot','2Fast','Autre marque'],
   ccs:['50','70','74','76','77','80','86','90','94','100 et +'],
-  vilo:['Origine','Top Performances','Barikit','Doppler','Malossi','Italkit','Polini','Stage6','Metrakit','Bidalot','Autre marque'],
-  box:['Origine 6 vitesses','Boîte rapprochée Top Performances','Boîte rapprochée Doppler','Boîte rapprochée Tecnigas','Boîte rapprochée Barikit','Autre boîte de course'],
+  vilo:['D\'origine','Pas d\'origine'],
+  box:['D\'origine','Pas d\'origine'],
   vario:['Origine','Malossi Multivar','Polini Hi-Speed','Top Performances','Stage6','Doppler','Autre'],
-  carbu:['Origine','Dell\'Orto PHBG 19','Dell\'Orto PHBG 21','Dell\'Orto PHBL 25','Dell\'Orto VHST 28','Keihin PWK 24','Keihin PWK 26','Keihin PWK 28','Keihin PWK 30','Mikuni','Polini CP','Stage6','Autre'],
-  pot:['Origine','KRM Pro Ride','Giannelli','Leovince','Yasuni','Arrow','Doppler','Tecnigas','Voca','Bidalot','Bud Racing','SCR Corse','Gencod','Turbokit','Metrakit','Stage6','Top Performances','Malossi','Polini','Motoforce','Autre'],
-  allu:['Origine','MVT Premium','MVT Digital Direct','Selettra','PVL','Malossi','Autre'],
-  extras:['Clapets / boîte à clapets','Admission / boîte à air','Radiateur','Durites silicone','Embrayage renforcé','Pignon / couronne','Kit chaîne neuf','Freins','Fourche','Amortisseur','Jantes / roues','Pneus neufs','Kit déco','Éclairage LED'],
+  carbu:['D\'origine','Pas d\'origine'],
+  pot:['Origine','KRM Pro Ride','MOST','Giannelli','Leovince','Yasuni','Arrow','Doppler','Tecnigas','Voca','Bidalot','Bud Racing','SCR Corse','Gencod','Turbokit','Metrakit','Stage6','Top Performances','Malossi','Polini','Motoforce','Autre'],
+  allu:['Origine','MVT Premium','MVT Digital Direct','Selettra','PVL','Autre'],
+  extras:['Clapets / boîte à clapets','Radiateur','Embrayage renforcé','Pignon / couronne','Kit chaîne neuf','Freins','Fourche','Jantes / roues','Pneus neufs','Kit déco','Kit selle','Plaque phare / plaque cross'],
   etats:['Comme neuve','Très bon état','Bon état','À réviser','À restaurer','Pour pièces'],
-  pbs:['Ne démarre pas','Fuite','Bruit moteur','Boîte qui craque','Embrayage qui patine','Problème électrique','Freins à refaire','Carrosserie cassée','A chuté'],
+  pbs:['Ne démarre pas','Fuite','Bruit moteur','Boîte endommagée','Embrayage qui patine','Problème électrique','Fourche tordue','Carénage endommagé','Cadre fissuré'],
 };
 const STEPS=['Véhicule','Modèle','Moteur','État','Photos'];
-const S={step:0,type:null,brand:null,model:null,otherModel:'',year:'',km:'',engine:null,cyl:'Origine',cylBrand:null,cc:null,cylMat:null,cylEtat:null,vilo:'Origine',box:null,boxEtat:'Passe bien',vario:'Origine',carbu:'Origine',pot:'Origine',allu:'Origine',potHomol:null,carters:null,faisceau:null,extras:[],etat:null,demarre:null,papiers:null,carenage:null,pneus:null,chaine:null,entretien:null,pbs:[],notes:'',photos:[],nom:'',ville:'',tel:''};
+const S={step:0,type:null,brand:null,model:null,otherModel:'',year:'',km:'',engine:null,cyl:'Origine',cylBrand:null,cc:null,cylMat:null,cylEtat:null,vilo:'D\'origine',box:null,boxEtat:'',vario:'Origine',carbu:'D\'origine',pot:'Origine',allu:'Origine',potHomol:null,carters:null,faisceau:null,extras:[],etat:null,demarre:null,papiers:null,carenage:null,pneus:null,chaine:null,entretien:null,pbs:[],notes:'',photos:[],nom:'',ville:'',tel:''};
 const $=s=>document.querySelector(s), E=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const root=$('#estim'); if(!root) return;
 const chips=(key,list,multi)=>`<div class="opt-row">${list.map(v=>{const on=multi?S[key].includes(v):S[key]===v;return `<button type="button" class="opt${on?' on':''}" data-k="${key}" data-v="${E(v)}"${multi?' data-m="1"':''} aria-pressed="${on}">${E(v)}</button>`}).join('')}</div>`;
@@ -1364,12 +1366,12 @@ function stepHTML(){
   if(st===2){const sug=suggestion();
     let h=`<h3 class="s-t">Moteur et préparation</h3>`+field('Type de moteur',chips('engine',DB.engines[S.type]),sug);
     h+=field('Cylindre',chips('cyl',['Origine','Kit cylindre']));
-    if(S.cyl==='Kit cylindre'){h+=`<div class="sub">${field('Marque du kit',chips('cylBrand',DB.cylBrands))}${field('Cylindrée',chips('cc',DB.ccs.map(c=>c==='100 et +'?c:c+' cm³')))}${field('Matière',chips('cylMat',['Fonte','Alu','Je ne sais pas']))}${field('État du cylindre',chips('cylEtat',['Neuf, jamais roulé','Rodé, bon état','Usé, à refaire','Je ne sais pas']))}</div>`;}
-    else h+=`<div class="sub">${field('État du cylindre',chips('cylEtat',['Bon état','Usé, à refaire','Je ne sais pas']))}</div>`;
+    if(S.cyl==='Kit cylindre'){h+=`<div class="sub">${field('Marque du kit',chips('cylBrand',DB.cylBrands))}${field('Cylindrée',chips('cc',DB.ccs.map(c=>c==='100 et +'?c:c+' cm³')))}${field('Matière',chips('cylMat',['Fonte','Alu','Je ne sais pas']))}${field('État du cylindre',chips('cylEtat',['Neuf, jamais roulé','Très bon état','Bon état','État moyen','Serré','Je ne sais pas']))}</div>`;}
+    else h+=`<div class="sub">${field('État du cylindre',chips('cylEtat',['Très bon état','Bon état','État moyen','Serré','Je ne sais pas']))}</div>`;
     if(isScoot()){h+=field('Variateur',chips('vario',DB.vario));}
     else{h+=field('Vilebrequin',chips('vilo',DB.vilo));
-      h+=field('Boîte de vitesses',chips('box',DB.box))+`<div class="sub">${field('Comment passe la boîte ?',chips('boxEtat',['Passe bien','Accroche parfois','Craque / saute','Je ne sais pas']))}</div>`;}
-    h+=field('Carburateur',chips('carbu',DB.carbu))+field('Pot d\'échappement',chips('pot',DB.pot))+(S.pot&&S.pot!=='Origine'?`<div class="sub">${field('Le pot est-il homologué ?',chips('potHomol',['Homologué','Non homologué','Je ne sais pas']))}</div>`:'')+field('Allumage',chips('allu',DB.allu))+field('Faisceau électrique',chips('faisceau',['D\'origine','Modifié','Refait à neuf','Je ne sais pas']))+field('Les carters moteur ont-ils déjà été ouverts ?',chips('carters',['Non, jamais ouverts','Oui, déjà ouverts','Je ne sais pas']),'important pour l\'estimation')+field('Autres pièces changées',chips('extras',DB.extras,true),'plusieurs choix possibles');
+      h+=field('Boîte de vitesses',chips('box',DB.box));}
+    h+=field('Carburateur',chips('carbu',DB.carbu))+field('Pot d\'échappement',chips('pot',DB.pot))+(S.pot&&S.pot!=='Origine'?`<div class="sub">${field('Le pot est-il homologué ?',chips('potHomol',['Homologué','Non homologué','Je ne sais pas']))}</div>`:'')+field('Allumage',chips('allu',DB.allu))+field('Faisceau électrique',chips('faisceau',['D\'origine','Modifié','Endommagé / bugs','Pas de faisceau','Je ne sais pas']))+field('Les carters moteur ont-ils déjà été ouverts ?',chips('carters',['Non, jamais ouverts','Oui, déjà ouverts','Je ne sais pas']),'important pour l\'estimation')+field('Autres pièces changées',chips('extras',DB.extras,true),'plusieurs choix possibles');
     return h;}
   if(st===3) return `<h3 class="s-t">État de la moto</h3>${field('État général',chips('etat',DB.etats))}${field('Est-ce qu\'elle démarre ?',chips('demarre',['Oui, roule bien','Oui, mais roule mal','Non']))}${field('Carénage',chips('carenage',['D\'origine','Adaptable (pas d\'origine)','Kit déco / modifié','Abîmé ou incomplet']))}${field('Pneus',chips('pneus',['Neufs','Bon état','À changer bientôt','À changer maintenant']))}${!isScoot()?field('Kit chaîne (chaîne, pignon, couronne)',chips('chaine',['Neuf','Bon état','À changer bientôt','À changer'])):''}${field('Papiers',chips('papiers',['Carte grise à mon nom','Carte grise pas à mon nom','Pas de carte grise']))}${field('Historique d\'entretien',chips('entretien',['Factures / carnet','Quelques factures','Aucun historique']))}${field('Problèmes connus',chips('pbs',DB.pbs,true),'facultatif')}${field('Autre chose à signaler',`<textarea class="inp" id="e-notes" placeholder="Entretien récent, pièces neuves, défauts…">${E(S.notes)}</textarea>`)}`;
   if(st===4) return `<h3 class="s-t">Photos et coordonnées</h3>
@@ -1388,7 +1390,7 @@ const modelName=()=>S.brand==='Autre marque'?S.otherModel:(S.model==='Autre mod�
 function recap(){const rows=[];const add=(k,v)=>{if(v&&String(v).trim())rows.push([k,v])};
   add('Véhicule',S.type&&DB.types.find(t=>t.id===S.type).t);add('Modèle',modelName());add('Année',S.year);add('Kilométrage',S.km&&S.km+' km');
   add('Moteur',S.engine);add('Cylindre',S.cyl==='Kit cylindre'?[S.cylBrand,S.cc,S.cylMat].filter(Boolean).join(' · '):(S.engine?'Origine':''));add('État cylindre',S.cylEtat);
-  if(isScoot())add('Variateur',S.step>=2&&S.vario);else{add('Vilebrequin',S.step>=2&&S.vilo);add('Boîte',S.box&&S.box+' · '+S.boxEtat);}
+  if(isScoot())add('Variateur',S.step>=2&&S.vario);else{add('Vilebrequin',S.step>=2&&S.vilo);add('Boîte',S.box);}
   if(S.step>=2){add('Carburateur',S.carbu);add('Pot',S.pot+(S.potHomol&&S.pot!=='Origine'?' · '+S.potHomol:''));add('Allumage',S.allu);}add('Faisceau',S.faisceau);add('Carters ouverts',S.carters);add('Autres pièces',S.extras.join(', '));
   add('État',S.etat);add('Démarre',S.demarre);add('Carénage',S.carenage);add('Pneus',S.pneus);add('Kit chaîne',S.chaine);add('Papiers',S.papiers);add('Entretien',S.entretien);add('Problèmes',S.pbs.join(', '));add('Photos',S.photos.length?S.photos.length+' photo'+(S.photos.length>1?'s':''):'');return rows;}
 function render(){
@@ -1433,7 +1435,7 @@ $('#e-copy').addEventListener('click',()=>{const t=$('#e-msg').textContent,st=$(
   const sel=()=>{const r=document.createRange();r.selectNodeContents($('#e-msg'));const s=getSelection();s.removeAllRanges();s.addRange(r);st.textContent='Texte sélectionné : copiez-le avec Ctrl+C ou un appui long.';};
   try{navigator.clipboard.writeText(t).then(()=>st.textContent='Récapitulatif copié. Collez-le dans votre message avec vos photos.',sel);}catch(e){sel();}});
 $('#e-edit').addEventListener('click',()=>{$('#e-done').hidden=true;root.hidden=false;S.step=STEPS.length-1;render();root.scrollIntoView({behavior:'smooth',block:'start'});});
-$('#e-restart').addEventListener('click',()=>{Object.assign(S,{step:0,type:null,brand:null,model:null,otherModel:'',year:'',km:'',engine:null,cyl:'Origine',cylBrand:null,cc:null,cylMat:null,cylEtat:null,vilo:'Origine',box:null,boxEtat:'Passe bien',vario:'Origine',carbu:'Origine',pot:'Origine',allu:'Origine',potHomol:null,carters:null,faisceau:null,extras:[],etat:null,demarre:null,papiers:null,carenage:null,pneus:null,chaine:null,entretien:null,pbs:[],notes:'',photos:[]});
+$('#e-restart').addEventListener('click',()=>{Object.assign(S,{step:0,type:null,brand:null,model:null,otherModel:'',year:'',km:'',engine:null,cyl:'Origine',cylBrand:null,cc:null,cylMat:null,cylEtat:null,vilo:'D\'origine',box:null,boxEtat:'',vario:'Origine',carbu:'D\'origine',pot:'Origine',allu:'Origine',potHomol:null,carters:null,faisceau:null,extras:[],etat:null,demarre:null,papiers:null,carenage:null,pneus:null,chaine:null,entretien:null,pbs:[],notes:'',photos:[]});
   $('#e-done').hidden=true;root.hidden=false;render();});
 render();
 })();
